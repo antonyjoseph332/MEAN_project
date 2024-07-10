@@ -1,0 +1,8 @@
+********* server *********
+
+- start: 'npx ts-node src/server.ts'
+- build: npx tsc
+
+********* client *********
+
+- start: ng serve
