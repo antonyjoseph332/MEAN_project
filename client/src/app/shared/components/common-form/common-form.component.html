@@ -1,0 +1,18 @@
+<form nz-form [nzLayout]="'inline'" [formGroup]="form" (ngSubmit)="submitForm()">
+  <nz-form-item *ngFor="let control of formConfig.config">
+    <nz-form-control nzErrorTip="Please input your {{control.label}}!">
+      <nz-input-group>
+        <input [formControlName]="control.name" nz-input [placeholder]="control.label" />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
+      <button nz-button nzType="primary" type="reset" nzShape="round">{{formConfig?.resetButton ||
+        'Reset'}}</button>
+      <button nz-button nzType="primary" type="submit" [disabled]="!form.valid"
+        nzShape="round">{{formConfig?.submitButton ||
+        'Submit'}}</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

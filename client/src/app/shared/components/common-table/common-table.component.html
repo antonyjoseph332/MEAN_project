@@ -1,0 +1,14 @@
+<nz-table #sortTable [nzData]="listData" nzSize="small" nzTableLayout="fixed">
+    <thead>
+        <tr>
+            <th *ngFor="let column of listColumns" [nzSortFn]="column.compare" >
+                {{ column.title }}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of sortTable.data">
+            <td *ngFor="let column of listColumns">{{ data[column.key] }}</td>
+        </tr>
+    </tbody>
+</nz-table>
