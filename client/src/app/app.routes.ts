@@ -32,10 +32,6 @@ export const routes: Routes = [
                         path: 'list',
                         component: UserListComponent
                     },
-                    {
-                        path: 'form',
-                        component: UserFormComponent
-                    }
                 ]
             },
             {
@@ -50,10 +46,7 @@ export const routes: Routes = [
                         path: 'list',
                         component: CompaniesListComponent
                     },
-                    {
-                        path: 'form',
-                        component: CompaniesFormComponent
-                    }]
+                    ]
             }
         ]
     },

@@ -17,15 +17,15 @@
       </ng-template>
       <ng-template #datePicker>
         <ng-container>
-          <nz-date-picker [formControlName]="control.name"></nz-date-picker>
+          <nz-date-picker nz-col [nzSpan]="24" [formControlName]="control.name"></nz-date-picker>
         </ng-container>
       </ng-template>
     </nz-form-control>
   </nz-form-item>
-  <nz-form-control>
+  <div nz-flex nzJustify="flex-end" nzGap="small" *ngIf="!formConfig.hideButton">
     <button nz-button nzType="primary" type="reset">{{formConfig?.resetButton ||
       'Reset'}}</button>
     <button nz-button nzType="primary" type="submit" [disabled]="!form.valid">{{formConfig?.submitButton ||
       'Submit'}}</button>
-  </nz-form-control>
+  </div>
 </form>

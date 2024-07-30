@@ -10,9 +10,11 @@
         <tr *ngFor="let data of sortTable.data">
             <td *ngFor="let column of listColumns">
                 <div *ngIf="column.key === 'actions'; else setValue">
-                    <button *ngFor="let btn of column.buttons" nz-button nzType="default" nzShape="circle"
-                        nzSize="small" (click)="actionControl(data,btn.action)"><span nz-icon
-                            [nzType]="btn.icon"></span></button>
+                    <div nz-flex [nzGap]="5">
+                        <button *ngFor="let btn of column.buttons" nz-button nzType="default" nzShape="circle"
+                            nzSize="small" (click)="actionControl(data,btn.action)"><span nz-icon
+                                [nzType]="btn.icon"></span></button>
+                    </div>
                 </div>
                 <ng-template #setValue>
                     {{ data[column.key] }}

@@ -1,1 +1,8 @@
-<app-common-table [data]="userList" [columns]="listOfColumn" (action)="actionControl($event)"></app-common-table>
+<div class="mb-3" nz-flex nzJustify="flex-end" nzGap="small">
+    <app-search-input (action)="filterList($event)" nz-col [nzSpan]="7"></app-search-input>
+    <button nz-button nzType="primary" (click)="createEditUser()">
+        <span nz-icon nzType="plus" nzTheme="outline"></span>
+        Create
+    </button>
+</div>
+<app-common-table [data]="filterData" [columns]="listOfColumn" (action)="actionControl($event)"></app-common-table>

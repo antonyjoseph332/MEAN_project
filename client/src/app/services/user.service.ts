@@ -18,6 +18,10 @@ export class UserService {
     return this.http.post<any>(`/users`, user);
   }
 
+  getUserById(id: string): Observable<any> {
+    return this.http.get<any>(`/users/${id}`);
+  }
+
   deleteUser(id: string): Observable<any> {
     return this.http.delete<any>(`/users/${id}`);
   }

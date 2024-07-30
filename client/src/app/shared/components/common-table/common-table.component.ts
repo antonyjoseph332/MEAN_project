@@ -1,13 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Input, Output } from '@angular/core';
-import { NzTableModule } from 'ng-zorro-antd/table';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { AntDesignModule } from '../../modules/ant-design.module';
 
 @Component({
   selector: 'app-common-table',
   standalone: true,
-  imports: [CommonModule, NzTableModule, NzButtonModule, NzIconModule],
+  imports: [CommonModule, AntDesignModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './common-table.component.html',
   styleUrl: './common-table.component.scss'

@@ -5,22 +5,26 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AntDesignModule } from '../../../shared/modules/ant-design.module';
 import { Router, RouterModule } from '@angular/router';
+import { UserFormComponent } from '../user-form/user-form.component';
+import { SearchInputComponent } from '../../../shared/components/search-input/search-input.component';
 
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [CommonTableComponent, AntDesignModule, RouterModule],
+  imports: [CommonTableComponent, UserFormComponent, SearchInputComponent, AntDesignModule, RouterModule],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.scss'
 })
 export class UserListComponent {
 
   userList: any[] = []
+  filterData: any[] = []
   confirmModal?: NzModalRef;
 
   actions = [
-    { action: 'delete', icon: 'delete' },
-    { action: 'edit', icon: 'edit' },
+    { action: 'View', icon: 'eye' },
+    { action: 'Edit', icon: 'edit' },
+    { action: 'Delete', icon: 'delete' },
   ]
 
   listOfColumn = [
@@ -50,24 +54,41 @@ export class UserListComponent {
     }
   ];
 
-  constructor(private userService: UserService, private modal: NzModalService, private message: NzMessageService, private router:Router) { }
+  constructor(private userService: UserService,
+    private modal: NzModalService,
+    private message: NzMessageService) { }
 
   ngOnInit() {
     this.getUserList();
   }
 
-  addUser(){
-    this.router.navigateByUrl('/form')
-  }
-
+  // user list 
   getUserList() {
     this.userService.getUsers().subscribe(result => {
       if (result.success) {
         this.userList = result.data;
+        this.filterData = result.data;
       }
     })
   }
 
+  // create page 
+  createEditUser(data?: any): void {
+    const modal = this.modal.create({
+      nzTitle: `${data?.type || 'Create'} User`,
+      nzContent: UserFormComponent,
+      nzFooter: null,
+      nzCentered: true,
+      nzData: data
+    });
+    modal.afterClose.subscribe((data) => {
+      if (data && data.success) {
+        this.getUserList();
+      }
+    });
+  }
+
+  // delete User 
   deleteUser(user: any) {
     this.confirmModal = this.modal.confirm({
       nzTitle: 'Do you Want to delete this user?',
@@ -92,10 +113,26 @@ export class UserListComponent {
     });
   }
 
+  // table actions 
   actionControl(event: any) {
-    if (event.action === 'delete') {
+    if (event.action === 'Delete') {
       this.deleteUser(event.data);
+    } else if (event.action === 'Edit' || event.action === 'View') {
+      const editData = { id: event.data._id, type: event.action }
+      this.createEditUser(editData);
     }
+  }
+
+  // filter table data 
+  filterList(event: string) {
+    this.filterData = this.userList.filter(item => {
+      return this.listOfColumn.some(column => {
+        if (item[column.key]) {
+          return item[column.key].toString().toLowerCase().includes(event.toLowerCase());
+        }
+        return false;
+      });
+    });
   }
 
 }
