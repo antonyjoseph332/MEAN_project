@@ -1,14 +1,23 @@
 <nz-table #sortTable [nzData]="listData" nzSize="small" nzTableLayout="fixed">
     <thead>
         <tr>
-            <th *ngFor="let column of listColumns" [nzSortFn]="column.compare" >
+            <th *ngFor="let column of listColumns" [nzSortFn]="column.compare">
                 {{ column.title }}
             </th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let data of sortTable.data">
-            <td *ngFor="let column of listColumns">{{ data[column.key] }}</td>
+            <td *ngFor="let column of listColumns">
+                <div *ngIf="column.key === 'actions'; else setValue">
+                    <button *ngFor="let btn of column.buttons" nz-button nzType="default" nzShape="circle"
+                        nzSize="small" (click)="actionControl(data,btn.action)"><span nz-icon
+                            [nzType]="btn.icon"></span></button>
+                </div>
+                <ng-template #setValue>
+                    {{ data[column.key] }}
+                </ng-template>
+            </td>
         </tr>
     </tbody>
 </nz-table>

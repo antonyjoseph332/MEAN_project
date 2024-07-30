@@ -1,20 +1,19 @@
-import { Component, Input } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzButtonModule } from 'ng-zorro-antd/button';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { AntDesignModule } from '../../modules/ant-design.module';
 
 @Component({
   selector: 'app-common-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NzFormModule, NzIconModule, NzButtonModule],
+  imports: [CommonModule, ReactiveFormsModule, AntDesignModule],
   templateUrl: './common-form.component.html',
   styleUrl: './common-form.component.scss'
 })
 export class CommonFormComponent {
 
-  @Input('form') formConfig: any
+  @Input('form') formConfig: any;
+  @Output('formSubmit') formSubmit: EventEmitter<any> = new EventEmitter();
   form!: FormGroup
 
   constructor(private fb: FormBuilder) { }
@@ -25,17 +24,17 @@ export class CommonFormComponent {
       formGroup[control.name] = [control.value || '', control.validators || []]
     });
     this.form = this.fb.group(formGroup);
+  }
 
-
-    // this.validateForm = this.fb.group({
-    //   userName: ['', [Validators.required]],
-    //   password: ['', [Validators.required]],
-    //   remember: [true]
-    // })
+  isControlRequired(controlName: string): boolean {
+    const control = this.form.get(controlName);
+    if (!control) return false;
+    const validator = control.validator ? control.validator({} as any) : null;
+    return validator ? !!validator['required'] : false;
   }
 
   submitForm() {
-    console.log(this.form.value)
+    this.formSubmit.emit(this.form.value);
   }
 
 }

@@ -1,18 +1,31 @@
-<form nz-form [nzLayout]="'inline'" [formGroup]="form" (ngSubmit)="submitForm()">
+<form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
   <nz-form-item *ngFor="let control of formConfig.config">
-    <nz-form-control nzErrorTip="Please input your {{control.label}}!">
-      <nz-input-group>
-        <input [formControlName]="control.name" nz-input [placeholder]="control.label" />
-      </nz-input-group>
+    <nz-form-label [nzSm]="6" [nzXs]="24"
+      [nzRequired]="isControlRequired(control.name)">{{control.label}}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your {{control.label}}!">
+      <ng-container *ngIf="control.type === 'input';else textBox">
+        <nz-input-group>
+          <input nz-input [formControlName]="control.name" [type]="control.inputType" [placeholder]="control.label" />
+        </nz-input-group>
+      </ng-container>
+      <ng-template #textBox>
+        <ng-container *ngIf="control.type === 'textbox';else datePicker">
+          <nz-textarea-count [nzMaxCharacterCount]="2000">
+            <textarea [formControlName]="control.name" nz-input rows="2" [placeholder]="control.label"></textarea>
+          </nz-textarea-count>
+        </ng-container>
+      </ng-template>
+      <ng-template #datePicker>
+        <ng-container>
+          <nz-date-picker [formControlName]="control.name"></nz-date-picker>
+        </ng-container>
+      </ng-template>
     </nz-form-control>
   </nz-form-item>
-  <nz-form-item>
-    <nz-form-control>
-      <button nz-button nzType="primary" type="reset" nzShape="round">{{formConfig?.resetButton ||
-        'Reset'}}</button>
-      <button nz-button nzType="primary" type="submit" [disabled]="!form.valid"
-        nzShape="round">{{formConfig?.submitButton ||
-        'Submit'}}</button>
-    </nz-form-control>
-  </nz-form-item>
+  <nz-form-control>
+    <button nz-button nzType="primary" type="reset">{{formConfig?.resetButton ||
+      'Reset'}}</button>
+    <button nz-button nzType="primary" type="submit" [disabled]="!form.valid">{{formConfig?.submitButton ||
+      'Submit'}}</button>
+  </nz-form-control>
 </form>

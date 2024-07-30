@@ -1,0 +1,39 @@
+<nz-layout class="layout">
+    <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+        <div class="logo"></div>
+        <ul nz-menu nzTheme="dark" nzMode="inline">
+            <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="isCollapsed ? 'Dashboard' : ''"
+                nzSelected routerLink="/dashboard">
+                <span nz-icon nzType="pie-chart" nzTheme="outline"></span>
+                <span>Dashboard</span>
+            </li>
+            <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="isCollapsed ? 'Articles' : ''"
+                routerLink="/article">
+                <span nz-icon nzType="audit" nzTheme="outline"></span>
+                <span>Articles</span>
+            </li>
+            <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="isCollapsed ? 'Companies' : ''"
+                routerLink="/companies">
+                <span nz-icon nzType="appstore" nzTheme="outline"></span>
+                <span>Companies</span>
+            </li>
+            <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="isCollapsed ? 'Users' : ''"
+                routerLink="/user">
+                <span nz-icon nzType="user" nzTheme="outline"></span>
+                <span>Users</span>
+            </li>
+        </ul>
+    </nz-sider>
+    <nz-layout>
+        <nz-content class="layout overflow-a">
+            <div class="bg-white p-3 sticky-top">
+                <button nz-button nzType="primary" (click)="toggleCollapsed()">
+                    <span nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
+                </button>
+            </div>
+            <div class="p-3">
+                <router-outlet></router-outlet>
+            </div>
+        </nz-content>
+    </nz-layout>
+</nz-layout>

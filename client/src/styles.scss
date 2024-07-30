@@ -1,1 +1,53 @@
 /* You can add global styles to this file, and also import other style files */
+
+// scrollbar ---------------------------------
+::-webkit-scrollbar {
+    width: 12px;  /* Width of the scrollbar */
+}
+
+/* For the track of the scrollbar */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;  /* Color of the track */
+    border-radius: 10px;  /* Optional: rounded corners */
+}
+
+/* For the handle of the scrollbar */
+::-webkit-scrollbar-thumb {
+    background: #888;  /* Color of the handle */
+    border-radius: 10px;  /* Optional: rounded corners */
+}
+
+/* For the handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;  /* Color when hovered */
+}
+
+
+.h-100 {
+    height: 100% !important;
+}
+
+.w-100 {
+    height: 100% !important;
+}
+
+.bg-white {
+    background: #fff !important;
+}
+
+.p-2 {
+    padding: .5rem !important;
+}
+
+.p-3 {
+    padding: 1rem !important;
+}
+
+.overflow-a {
+    overflow: auto !important;
+}
+
+.sticky-top {
+    position: sticky;
+    top: 0;
+}

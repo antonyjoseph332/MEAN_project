@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import userRouter from './controllers/userController';
+import articleRouter from './controllers/articleController';
 
 class App {
     public app: express.Application;
@@ -22,6 +23,7 @@ class App {
 
     private routes(): void {
         this.app.use('/api/users', userRouter);
+        this.app.use('/api/article', articleRouter);
     }
 
     private connectDatabase(): void {
