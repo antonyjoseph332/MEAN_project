@@ -1,12 +1,1 @@
-<p>articles works!</p>
-<button nz-button nzType="primary" nzShape="round" (click)="showCreate = true">
-    Create
-</button>
-<nz-modal [(nzVisible)]="showCreate" nzTitle="Create Article" nzCentered
-    (nzOnCancel)="handleCancelMiddle()" [nzFooter]="null" (nzOnOk)="handleOkMiddle()">
-    <ng-container *nzModalContent>
-        <app-article-form></app-article-form>
-    </ng-container>
-</nz-modal>
-
 <app-article-list></app-article-list>

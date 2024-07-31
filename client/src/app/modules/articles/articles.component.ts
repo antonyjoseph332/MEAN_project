@@ -13,13 +13,4 @@ import { AntDesignModule } from '../../shared/modules/ant-design.module';
 })
 export class ArticlesComponent {
 
-  showCreate: boolean = false;
-
-  handleCancelMiddle() {
-    this.showCreate = false;
-  }
-
-  handleOkMiddle() {
-
-  }
 }

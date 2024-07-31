@@ -12,6 +12,8 @@ import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzCardModule } from 'ng-zorro-antd/card';
 
 @NgModule({
   declarations: [],
@@ -28,7 +30,9 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
     NzFlexModule,
     NzLayoutModule,
     NzDatePickerModule,
-    NzGridModule
+    NzGridModule,
+    NzPopconfirmModule,
+    NzCardModule
   ],
   exports: [
     NzButtonModule,
@@ -43,7 +47,9 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
     NzFlexModule,
     NzLayoutModule,
     NzDatePickerModule,
-    NzGridModule
+    NzGridModule,
+    NzPopconfirmModule,
+    NzCardModule
   ]
 })
 export class AntDesignModule { }

@@ -56,6 +56,7 @@ export class UserFormComponent {
 
   // crate user 
   onSubmitForm(ev: any) {
+    ev.userType = 'admin'
     this.userService.createUser(ev).subscribe(result => {
       if (result.success) {
         this.message.create('success', 'User created successfully!');

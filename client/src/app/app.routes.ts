@@ -4,12 +4,14 @@ import { UserListComponent } from './modules/users/user-list/user-list.component
 import { ArticlesComponent } from './modules/articles/articles.component';
 import { CompaniesComponent } from './modules/companies/companies.component';
 import { CompaniesListComponent } from './modules/companies/companies-list/companies-list.component';
-import { CompaniesFormComponent } from './modules/companies/companies-form/companies-form.component';
-import { UserFormComponent } from './modules/users/user-form/user-form.component';
 import { HomeComponent } from './modules/home/home.component';
+import { LoginComponent } from './modules/login/login.component';
 
 export const routes: Routes = [
-
+    {
+        path: 'login',
+        component: LoginComponent
+    },
     {
         path: '',
         component: HomeComponent,

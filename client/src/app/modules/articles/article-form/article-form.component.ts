@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { CommonFormComponent } from '../../../shared/components/common-form/common-form.component';
 import { ArticleService } from '../../../services/article.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalRef } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-article-form',
@@ -11,23 +13,49 @@ import { ArticleService } from '../../../services/article.service';
   styleUrl: './article-form.component.scss'
 })
 export class ArticleFormComponent {
- 
-  constructor(private articleService: ArticleService){} 
+  modalData: any;
+  @ViewChild(CommonFormComponent) formComponent!: CommonFormComponent;
+
+  constructor(private articleService: ArticleService,
+    private message: NzMessageService,
+    private modalRef: NzModalRef<ArticleFormComponent>) { }
 
   articleForm = {
     config: [
-      { name: 'article', label: 'Article', validators: [Validators.required] },
-      { name: 'price', label: 'Price', type: 'numeber', validators: [Validators.required] },
+      { name: 'article', label: 'Article', type: 'input', validators: [Validators.required] },
+      { name: 'price', label: 'Price', type: 'input', inputType: 'number', validators: [Validators.required] },
     ],
     submitButton: 'Submit',
-    resetButton: 'Clear'
+    resetButton: 'Clear',
+    hideButton: false
   }
 
-  onSubmitForm(ev: any) {
-    console.log(ev);
-    this.articleService.createArticle(ev).subscribe(result=>{
-      console.log(result);
-      
+  // get user by id 
+  getUser() {
+    this.articleService.getArticle(this.modalData.id).subscribe(result => {
+      if (result && result.success) {
+        this.formComponent.form.patchValue(result.data);
+        if (this.modalData.type === 'View') {
+          this.formComponent.form.disable();
+          this.articleForm.hideButton = true;
+        }
+      }
     })
   }
+
+  // crate user 
+  onSubmitForm(ev: any) {
+    this.articleService.createArticle(ev).subscribe(result => {
+      if (result.success) {
+        this.message.create('success', 'User created successfully!');
+        this.modalRef.close({ success: true, data: ev });
+      } else {
+        this.message.create('error', result.message);
+      }
+    }, err => {
+
+    })
+  }
+
+
 }

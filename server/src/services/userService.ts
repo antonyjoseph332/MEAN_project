@@ -10,6 +10,10 @@ class UserService {
         return User.findById(userId);
     }
 
+    async getUserByEmailId(email: string): Promise<IUser | null> {
+        return User.findOne({ email }).exec();
+    }
+
     async createUser(user: IUser): Promise<IUser> {
         return User.create(user);
     }
