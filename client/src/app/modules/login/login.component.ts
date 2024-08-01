@@ -34,12 +34,14 @@ export class LoginComponent {
       this.isLoading = true
       this.userService.loginUser(this.validateForm.value).subscribe(result => {
         if (result && result.success) {
-          this.authService.setToken(result.token);
+          this.authService.setUserAndToken(result.data);
           this.route.navigateByUrl('user')
         } else {
           this.message.create('error', result.message);
         }
-        this.isLoading = false;
+        this.isLoading = false
+      }, err => {
+        this.isLoading = false
       })
 
     } else {

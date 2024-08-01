@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
 import articleService from '../services/articleService';
 import { IArticle } from '../models/article';
+import { authenticateJWT } from './authController';
 
 const router: Router = Router();
 
@@ -65,10 +66,10 @@ class ArticleController {
 }
 
 const controller = new ArticleController()
-router.get('/', controller.getAllArticles);
-router.get('/:id', controller.getArticleById);
-router.post('/', controller.createArticle);
-router.put('/:id', controller.updateArticle);
-router.delete('/:id', controller.deleteArticle);
+router.get('/', authenticateJWT, controller.getAllArticles);
+router.get('/:id', authenticateJWT, controller.getArticleById);
+router.post('/', authenticateJWT, controller.createArticle);
+router.put('/:id', authenticateJWT, controller.updateArticle);
+router.delete('/:id', authenticateJWT, controller.deleteArticle);
 
 export default router;

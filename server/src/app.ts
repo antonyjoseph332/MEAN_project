@@ -4,7 +4,13 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import userRouter from './controllers/userController';
 import articleRouter from './controllers/articleController';
-
+declare global {
+    namespace Express {
+        interface Request {
+            user?: any;
+        }
+    }
+}
 class App {
     public app: express.Application;
 

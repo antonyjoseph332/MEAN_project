@@ -6,15 +6,18 @@ import { CompaniesComponent } from './modules/companies/companies.component';
 import { CompaniesListComponent } from './modules/companies/companies-list/companies-list.component';
 import { HomeComponent } from './modules/home/home.component';
 import { LoginComponent } from './modules/login/login.component';
+import { tokenGuardGuard } from './core/token-guard.guard';
 
 export const routes: Routes = [
     {
         path: 'login',
-        component: LoginComponent
+        component: LoginComponent,
+        canActivate: [tokenGuardGuard]
     },
     {
         path: '',
         component: HomeComponent,
+        canActivate: [tokenGuardGuard],
         children: [
             {
                 path: '',
@@ -44,10 +47,16 @@ export const routes: Routes = [
                 path: 'companies',
                 component: CompaniesComponent,
                 children:
-                    [{
-                        path: 'list',
-                        component: CompaniesListComponent
-                    },
+                    [
+                        {
+                            path: '',
+                            redirectTo: 'list',
+                            pathMatch: 'full'
+                        },
+                        {
+                            path: 'list',
+                            component: CompaniesListComponent
+                        },
                     ]
             }
         ]

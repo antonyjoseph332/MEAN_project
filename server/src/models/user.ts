@@ -7,5 +7,6 @@ export interface IUser extends Document {
     description: string;
     dob: Date;
     img: string;
+    userType: string;
     _id?: string
 }

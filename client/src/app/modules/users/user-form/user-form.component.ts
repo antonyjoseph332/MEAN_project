@@ -37,6 +37,7 @@ export class UserFormComponent {
   ngOnInit() {
     this.modalData = this.modalRef.getConfig().nzData
     if (this.modalData && this.modalData.id) {
+      this.userForm.config = this.userForm.config.filter(c => c.name !== 'password')
       this.getUser();
     }
   }
@@ -56,16 +57,24 @@ export class UserFormComponent {
 
   // crate user 
   onSubmitForm(ev: any) {
-    ev.userType = 'admin'
-    this.userService.createUser(ev).subscribe(result => {
-      if (result.success) {
-        this.message.create('success', 'User created successfully!');
-        this.modalRef.close({ success: true, data: ev });
-      } else {
-        this.message.create('error', result.message);
-      }
-    }, err => {
-
-    })
+    if (this.modalData.type === 'Edit') {
+      this.userService.updateUser(ev,this.modalData.id).subscribe(result => {
+        if (result.success) {
+          this.message.create('success', 'User edit successfully!');
+          this.modalRef.close({ success: true, data: ev });
+        } else {
+          this.message.create('error', result.message);
+        }
+      })
+    } else {
+      this.userService.createUser(ev).subscribe(result => {
+        if (result.success) {
+          this.message.create('success', 'User created successfully!');
+          this.modalRef.close({ success: true, data: ev });
+        } else {
+          this.message.create('error', result.message);
+        }
+      })
+    }
   }
 }

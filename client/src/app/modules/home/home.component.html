@@ -26,10 +26,35 @@
     </nz-sider>
     <nz-layout>
         <nz-content class="layout overflow-a">
-            <div class="bg-white p-3 sticky-top">
+            <div class="bg-white p-3 sticky-top" nz-flex nzJustify="space-between" nzAlign="center">
                 <button nz-button nzType="primary" (click)="toggleCollapsed()">
                     <span nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
                 </button>
+
+                <div>
+                    <nz-avatar [nzShape]="'square'" nzIcon="user"></nz-avatar>
+                    <button nz-button nzType="text" nz-dropdown [nzDropdownMenu]="menu">
+                        {{loginUser?.name}}
+                        <span nz-icon nzType="down"></span>
+                    </button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu>
+                            <li nz-menu-item>
+                                <button nz-button nzType="text">
+                                    <span nz-icon nzType="user"></span>
+                                    Profile
+                                </button>
+                            </li>
+                            <li nz-menu-item>
+                                <button nz-button nzType="text" (click)="signOut()">
+                                    <span nz-icon nzType="poweroff"></span>
+                                    Sign out
+                                </button>
+                            </li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </div>
+
             </div>
             <div class="p-3">
                 <router-outlet></router-outlet>

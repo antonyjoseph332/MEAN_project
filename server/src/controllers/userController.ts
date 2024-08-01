@@ -4,6 +4,7 @@ import { IUser } from '../models/user';
 import bcrypt from 'bcrypt';
 import { secret } from '../config';
 import jwtToken from 'jsonwebtoken';
+import { authenticateJWT } from './authController';
 
 const router: Router = Router();
 
@@ -16,8 +17,14 @@ class UserController {
             if (user) {
                 const userPassword = await bcrypt.compare(password, user.password);
                 if (userPassword) {
-                    const token = jwtToken.sign({ id: user._id, email: user.email }, secret, { expiresIn: '1h' });
-                    res.json({ success: true, token });
+                    const userDetails = {
+                        id: user._id,
+                        email: user.email,
+                        name: user.name,
+                        userType: user.userType
+                    }
+                    const token = jwtToken.sign(userDetails, secret, { expiresIn: '1h' });
+                    res.json({ success: true, data: { token, user } });
                 } else {
                     res.json({ success: false, message: 'Invalid Password' });
                 }
@@ -33,6 +40,9 @@ class UserController {
     async createUser(req: Request, res: Response): Promise<void> {
         try {
             const newUser: IUser = req.body;
+            if (req.user.userType === 'admin') {
+                newUser.userType = 'user'
+            }
             const salt = await bcrypt.genSalt(10);
             newUser.password = await bcrypt.hash(newUser.password, salt);
             const createdUser: IUser = await userService.createUser(newUser);
@@ -89,14 +99,15 @@ class UserController {
             res.status(500).send({ success: false, message: error.message });
         }
     }
+
 }
 
 const controller = new UserController()
-router.get('/', controller.getAllUsers);
-router.get('/:id', controller.getUserById);
+router.get('/', authenticateJWT, controller.getAllUsers);
+router.get('/:id', authenticateJWT, controller.getUserById);
 router.post('/login', controller.loginUser);
-router.post('/', controller.createUser);
-router.put('/:id', controller.updateUser);
-router.delete('/:id', controller.deleteUser);
+router.post('/', authenticateJWT, controller.createUser);
+router.put('/:id', authenticateJWT, controller.updateUser);
+router.delete('/:id', authenticateJWT, controller.deleteUser);
 
 export default router;
