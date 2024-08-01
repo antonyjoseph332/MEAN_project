@@ -26,7 +26,6 @@ export const interceptorInterceptor: HttpInterceptorFn = (req, next) => {
       if (error.error) {
         message.create('error', error.error.message)
         if (error.status === 403) {
-          route.navigateByUrl('login');
           authService.removeToken();
         }
       }

@@ -2,59 +2,48 @@
     <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
         <div class="logo"></div>
         <ul nz-menu nzTheme="dark" nzMode="inline">
-            <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="isCollapsed ? 'Dashboard' : ''"
-                nzSelected routerLink="/dashboard">
-                <span nz-icon nzType="pie-chart" nzTheme="outline"></span>
-                <span>Dashboard</span>
-            </li>
-            <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="isCollapsed ? 'Articles' : ''"
-                routerLink="/article">
-                <span nz-icon nzType="audit" nzTheme="outline"></span>
-                <span>Articles</span>
-            </li>
-            <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="isCollapsed ? 'Companies' : ''"
-                routerLink="/companies">
-                <span nz-icon nzType="appstore" nzTheme="outline"></span>
-                <span>Companies</span>
-            </li>
-            <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="isCollapsed ? 'Users' : ''"
-                routerLink="/user">
-                <span nz-icon nzType="user" nzTheme="outline"></span>
-                <span>Users</span>
+            <li *ngFor="let item of routers" nz-menu-item nz-tooltip nzTooltipPlacement="right"
+                [nzTooltipTitle]="isCollapsed ? item.header : ''" [routerLink]="item.route"
+                [class.ant-menu-item-selected]="item.route == currentRoute?.route">
+                <span nz-icon [nzType]="item.icon" nzTheme="outline"></span>
+                <span>{{item.header}}</span>
             </li>
         </ul>
     </nz-sider>
     <nz-layout>
         <nz-content class="layout overflow-a">
             <div class="bg-white p-3 sticky-top" nz-flex nzJustify="space-between" nzAlign="center">
-                <button nz-button nzType="primary" (click)="toggleCollapsed()">
-                    <span nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
-                </button>
-
-                <div>
-                    <nz-avatar [nzShape]="'square'" nzIcon="user"></nz-avatar>
-                    <button nz-button nzType="text" nz-dropdown [nzDropdownMenu]="menu">
-                        {{loginUser?.name}}
-                        <span nz-icon nzType="down"></span>
+                <div nz-flex nzAlign="center" nzGap="small">
+                    <button nz-button nzType="primary" (click)="toggleCollapsed()">
+                        <span nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
                     </button>
-                    <nz-dropdown-menu #menu="nzDropdownMenu">
-                        <ul nz-menu>
-                            <li nz-menu-item>
-                                <button nz-button nzType="text">
-                                    <span nz-icon nzType="user"></span>
-                                    Profile
-                                </button>
-                            </li>
-                            <li nz-menu-item>
-                                <button nz-button nzType="text" (click)="signOut()">
-                                    <span nz-icon nzType="poweroff"></span>
-                                    Sign out
-                                </button>
-                            </li>
-                        </ul>
-                    </nz-dropdown-menu>
+                    <b>{{currentRoute?.header}}</b>
                 </div>
-
+                <div nz-flex nzAlign="center" nzGap="small">
+                    <div nz-flex nzAlign="center">
+                        <nz-avatar [nzShape]="'square'" nzIcon="user"></nz-avatar>
+                        <button nz-button nzType="text" nz-dropdown [nzDropdownMenu]="menu">
+                            {{loginUser?.name}}
+                            <span nz-icon nzType="down"></span>
+                        </button>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                            <ul nz-menu>
+                                <li nz-menu-item>
+                                    <button nz-button nzType="text">
+                                        <span nz-icon nzType="user"></span>
+                                        Profile
+                                    </button>
+                                </li>
+                                <li nz-menu-item>
+                                    <button nz-button nzType="text" (click)="signOut()">
+                                        <span nz-icon nzType="poweroff"></span>
+                                        Sign out
+                                    </button>
+                                </li>
+                            </ul>
+                        </nz-dropdown-menu>
+                    </div>
+                </div>
             </div>
             <div class="p-3">
                 <router-outlet></router-outlet>
