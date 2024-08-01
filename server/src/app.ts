@@ -4,6 +4,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import userRouter from './controllers/userController';
 import articleRouter from './controllers/articleController';
+import companyRouter from './controllers/companyController';
 declare global {
     namespace Express {
         interface Request {
@@ -30,6 +31,7 @@ class App {
     private routes(): void {
         this.app.use('/api/users', userRouter);
         this.app.use('/api/article', articleRouter);
+        this.app.use('/api/company', companyRouter);
     }
 
     private connectDatabase(): void {
