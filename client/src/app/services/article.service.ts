@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ArticleService {
- 
+
   constructor(private http: HttpClient) { }
 
   getArticles(): Observable<any> {
@@ -20,6 +20,7 @@ export class ArticleService {
   deleteArticle(id: string): Observable<any> {
     return this.http.delete<any>(`/article/${id}`);
   }
+  
   getArticle(id: string): Observable<any> {
     return this.http.get<any>(`/article/${id}`);
   }

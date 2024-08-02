@@ -32,6 +32,7 @@ class CompanyController {
     async createCompany(req: Request, res: Response): Promise<void> {
         try {
             const newCompany: ICompany = req.body;
+            newCompany.createdAt = new Date();
             const createdCompany: ICompany = await companyService.createCompany(newCompany);
             res.json({ success: true, data: createdCompany });
         } catch (error: any) {
