@@ -8,7 +8,7 @@ const router: Router = Router();
 class CompanyController {
     async getAllCompanys(req: Request, res: Response): Promise<void> {
         try {
-            const companys: ICompany[] = await companyService.getAllCompanys();
+            const companys: ICompany[] = await companyService.getAllCompanys(req.user);
             res.json({ success: true, data: companys });
         } catch (error: any) {
             res.status(500).send({ success: false, message: error.message });
@@ -33,6 +33,7 @@ class CompanyController {
         try {
             const newCompany: ICompany = req.body;
             newCompany.createdAt = new Date();
+            newCompany.createdBy = req.user.id;
             const createdCompany: ICompany = await companyService.createCompany(newCompany);
             res.json({ success: true, data: createdCompany });
         } catch (error: any) {

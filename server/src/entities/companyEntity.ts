@@ -7,6 +7,7 @@ const companySchema: Schema = new Schema({
     address: { type: String, required: true },
     phone: { type: String, required: true },
     createdAt: { type: Date, required: false },
+    createdBy: { type: String, required: false },
 });
 
 export default mongoose.model<ICompany>('Companys', companySchema);

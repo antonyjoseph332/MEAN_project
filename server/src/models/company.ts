@@ -4,5 +4,6 @@ export interface ICompany extends Document {
     type: string;
     address: string;
     phone: string;
+    createdBy: string;
     createdAt: Date;
 }

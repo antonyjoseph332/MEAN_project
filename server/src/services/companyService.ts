@@ -1,9 +1,15 @@
+import mongoose from 'mongoose';
 import Company from '../entities/companyEntity';
 import { ICompany } from '../models/company';
 
 class CompanyService {
-    async getAllCompanys(): Promise<ICompany[]> {
-        return Company.find();
+    async getAllCompanys(user: any): Promise<ICompany[]> {
+        const matchConditions: any = {
+            _id: new mongoose.Types.ObjectId(user.company)
+        };
+        return Company.aggregate([
+            { $match: user.userType != 'admin' ? matchConditions : {} }
+        ]);
     }
 
     async getCompanyById(companyId: string): Promise<ICompany | null> {

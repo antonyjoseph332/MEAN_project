@@ -16,6 +16,7 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 
 @NgModule({
   declarations: [],
@@ -37,6 +38,7 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
     NzCardModule,
     NzAvatarModule,
     NzDropDownModule,
+    NzAutocompleteModule
   ],
   exports: [
     NzButtonModule,
@@ -55,7 +57,8 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
     NzPopconfirmModule,
     NzCardModule,
     NzAvatarModule,
-    NzDropDownModule
+    NzDropDownModule,
+    NzAutocompleteModule
   ]
 })
 export class AntDesignModule { }

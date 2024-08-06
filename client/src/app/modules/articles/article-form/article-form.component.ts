@@ -36,7 +36,6 @@ export class ArticleFormComponent {
       if (result && result.success) {
         this.formComponent.form.patchValue(result.data);
         if (this.modalData.type === 'View') {
-          this.formComponent.form.disable();
           this.articleForm.hideButton = true;
         }
       }

@@ -13,10 +13,30 @@ import { AntDesignModule } from '../../modules/ant-design.module';
 export class CommonFormComponent {
 
   @Input('form') formConfig: any;
+  @Input('filterOptions') filterOptions: any;
   @Output('formSubmit') formSubmit: EventEmitter<any> = new EventEmitter();
   form!: FormGroup
+  filteredOptions: any[] = [];
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder) {
+  }
+
+  compareFun = (o1: any | string, o2: any): boolean => {
+    if (o1) {
+      return typeof o1 === 'string' ? o1 === o2.label : o1.value === o2.value;
+    } else {
+      return false;
+    }
+  };
+
+  onChange(filterKey: string, value: string): void {
+    this.filteredOptions = this.filterOptions[filterKey].filter((option: any) => option.label.toLowerCase().includes(value.toLowerCase()));
+  }
+
+  setFilterOptions(filterKey: string) {
+    this.filteredOptions = this.filterOptions[filterKey]
+  }
+
 
   ngOnInit() {
     const formGroup: any = {}

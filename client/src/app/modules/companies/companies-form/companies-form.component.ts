@@ -46,7 +46,6 @@ export class CompaniesFormComponent {
       if (result && result.success) {
         this.formComponent.form.patchValue(result.data);
         if (this.modalData?.type === 'View') {
-          this.formComponent.form.disable();
           this.userForm.hideButton = true;
         }
       }

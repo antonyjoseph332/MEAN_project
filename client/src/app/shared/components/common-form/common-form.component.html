@@ -9,10 +9,23 @@
         </nz-input-group>
       </ng-container>
       <ng-template #textBox>
-        <ng-container *ngIf="control.type === 'textbox';else datePicker">
+        <ng-container *ngIf="control.type === 'textbox';else autoCompelte">
           <nz-textarea-count [nzMaxCharacterCount]="2000">
             <textarea [formControlName]="control.name" nz-input rows="2" [placeholder]="control.label"></textarea>
           </nz-textarea-count>
+        </ng-container>
+      </ng-template>
+      <ng-template #autoCompelte>
+        <ng-container *ngIf="control.type === 'autocomplete';else datePicker">
+          <div class="example-input">
+            <input [placeholder]='control.label' nz-input (ngModelChange)="onChange(control?.filter,$event)"
+              (focus)="setFilterOptions(control?.filter)" [formControlName]="control.name" [nzAutocomplete]="auto" />
+            <nz-autocomplete #auto [compareWith]="compareFun">
+              <nz-auto-option *ngFor="let option of filteredOptions" [nzValue]="option.value" [nzLabel]="option.label">
+                {{ option.label }}
+              </nz-auto-option>
+            </nz-autocomplete>
+          </div>
         </ng-container>
       </ng-template>
       <ng-template #datePicker>

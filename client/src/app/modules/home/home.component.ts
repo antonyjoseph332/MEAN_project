@@ -4,6 +4,7 @@ import { AntDesignModule } from '../../shared/modules/ant-design.module';
 import { AuthService } from '../../core/auth.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { CommonModule } from '@angular/common';
+import { accessUsers } from '../../shared/jsons/router';
 
 @Component({
   selector: 'app-home',
@@ -15,12 +16,8 @@ import { CommonModule } from '@angular/common';
 export class HomeComponent {
   isCollapsed = false;
   loginUser: any
+  routers = accessUsers('sidemenu');
 
-  routers = [
-    { route: '/companies', header: 'Companies', icon: 'appstore' },
-    { route: '/article', header: 'Articles', icon: 'audit' },
-    { route: '/user', header: 'Users', icon: 'user' },
-  ]
   currentRoute: any;
 
   constructor(private authService: AuthService,

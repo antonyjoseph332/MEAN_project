@@ -10,7 +10,8 @@ const UserSchema: Schema = new Schema({
     dob: { type: Date, required: true },
     img: { type: String, required: false },
     company: { type: String, required: false },
-    userType: { type: String, required: true }
+    userType: { type: String, required: true },
+    createdBy: { type: String, required: false }
 });
 
 export default mongoose.model<IUser>('User', UserSchema);

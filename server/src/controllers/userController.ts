@@ -21,7 +21,8 @@ class UserController {
                         id: user._id,
                         email: user.email,
                         name: user.name,
-                        userType: user.userType
+                        userType: user.userType,
+                        company: user.company
                     }
                     const token = jwtToken.sign(userDetails, secret, { expiresIn: '1h' });
                     res.json({ success: true, data: { token, user } });
@@ -42,6 +43,10 @@ class UserController {
             const newUser: IUser = req.body;
             if (req.user.userType === 'admin') {
                 newUser.userType = 'user'
+            } else {
+                newUser.company = req.user.company;
+                newUser.createdBy = req.user.id;
+                newUser.userType = req.user.userType
             }
             const salt = await bcrypt.genSalt(10);
             newUser.password = await bcrypt.hash(newUser.password, salt);
@@ -54,7 +59,7 @@ class UserController {
 
     async getAllUsers(req: Request, res: Response): Promise<void> {
         try {
-            const users: IUser[] = await userService.getAllUsers();
+            const users: IUser[] = await userService.getAllUsers(req.user);
             res.json({ success: true, data: users });
         } catch (error: any) {
             res.status(500).send({ success: false, message: error.message });

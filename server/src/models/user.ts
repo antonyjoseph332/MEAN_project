@@ -8,5 +8,7 @@ export interface IUser extends Document {
     dob: Date;
     img: string;
     userType: string;
+    createdBy: string;
+    company: string;
     _id?: string
 }

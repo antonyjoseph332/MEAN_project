@@ -11,22 +11,23 @@ export class AuthService {
 
   constructor(private cookieService: CookieService, private route: Router) { }
 
-  setUserAndToken(data: any): void {
-    this.cookieService.set(this.tokenKey, data.token);
-    this.cookieService.set(this.userKey, JSON.stringify(data.user));
+  setUserAndToken(data: any) {
+    localStorage.setItem(this.tokenKey, data.token);
+    localStorage.setItem(this.userKey, JSON.stringify(data.user));
   }
 
-  getUser(): string | null {
-    const user = this.cookieService.get(this.userKey);
-    return JSON.parse(user) || ''
+  getUser() {
+    const user: any = localStorage.getItem(this.userKey);
+    return JSON.parse(user) || {}
   }
 
-  getToken(): string | null {
-    return this.cookieService.get(this.tokenKey) || '';
+  getToken() {
+    return localStorage.getItem(this.tokenKey) || '';
   }
 
-  removeToken(): void {
+  removeToken() {
+    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.userKey);
     this.route.navigateByUrl('login');
-    this.cookieService.delete(this.tokenKey, '');
   }
 }

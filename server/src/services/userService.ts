@@ -1,9 +1,22 @@
+import mongoose from 'mongoose';
 import User from '../entities/userEntity';
 import { IUser } from '../models/user';
 
 class UserService {
-    async getAllUsers(): Promise<IUser[]> {
-        return User.find();
+
+    async getAllUsers(user: any): Promise<IUser[]> {
+        const matchConditions: any = {
+            _id: { $ne: new mongoose.Types.ObjectId(user.id) }
+        };
+        if (user.company) {
+            matchConditions.company = user.company;
+        }
+        if (user.userType != 'admin') {
+            matchConditions.userType = { $ne: 'admin' }
+        }
+        return User.aggregate([
+            { $match: matchConditions }
+        ]);
     }
 
     async getUserById(userId: string): Promise<IUser | null> {

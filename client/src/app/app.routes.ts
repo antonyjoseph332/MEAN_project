@@ -7,6 +7,7 @@ import { CompaniesListComponent } from './modules/companies/companies-list/compa
 import { HomeComponent } from './modules/home/home.component';
 import { LoginComponent } from './modules/login/login.component';
 import { tokenGuardGuard } from './core/token-guard.guard';
+import { userRoleGuard } from './core/user-role.guard';
 
 export const routes: Routes = [
     {
@@ -27,6 +28,7 @@ export const routes: Routes = [
             {
                 path: 'user',
                 component: UsersComponent,
+                canActivate: [userRoleGuard],
                 children: [
                     {
                         path: '',
@@ -35,17 +37,20 @@ export const routes: Routes = [
                     },
                     {
                         path: 'list',
-                        component: UserListComponent
+                        component: UserListComponent,
+                        canActivate: [userRoleGuard],
                     },
                 ]
             },
             {
                 path: 'article',
                 component: ArticlesComponent,
+                canActivate: [userRoleGuard],
             },
             {
                 path: 'companies',
                 component: CompaniesComponent,
+                canActivate: [userRoleGuard],
                 children:
                     [
                         {
@@ -55,7 +60,8 @@ export const routes: Routes = [
                         },
                         {
                             path: 'list',
-                            component: CompaniesListComponent
+                            component: CompaniesListComponent,
+                            canActivate: [userRoleGuard],
                         },
                     ]
             }
