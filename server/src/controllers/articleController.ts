@@ -8,7 +8,7 @@ const router: Router = Router();
 class ArticleController {
     async getAllArticles(req: Request, res: Response): Promise<void> {
         try {
-            const articles: IArticle[] = await articleService.getAllArticles();
+            const articles: IArticle[] = await articleService.getAllArticles(req.user);
             res.json({ success: true, data: articles });
         } catch (error: any) {
             res.status(500).send({ success: false, message: error.message });
@@ -32,6 +32,10 @@ class ArticleController {
     async createArticle(req: Request, res: Response): Promise<void> {
         try {
             const newArticle: IArticle = req.body;
+            if(req.user.userType !== 'admin'){
+            newArticle.company = req.user?.company
+        }
+        
             const createdArticle: IArticle = await articleService.createArticle(newArticle);
             res.json({ success: true, data: createdArticle });
         } catch (error: any) {

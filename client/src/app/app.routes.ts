@@ -8,6 +8,7 @@ import { HomeComponent } from './modules/home/home.component';
 import { LoginComponent } from './modules/login/login.component';
 import { tokenGuardGuard } from './core/token-guard.guard';
 import { userRoleGuard } from './core/user-role.guard';
+import { ArticleListComponent } from './modules/articles/article-list/article-list.component';
 
 export const routes: Routes = [
     {
@@ -46,6 +47,19 @@ export const routes: Routes = [
                 path: 'article',
                 component: ArticlesComponent,
                 canActivate: [userRoleGuard],
+                children:
+                    [
+                        {
+                            path: '',
+                            redirectTo: 'list',
+                            pathMatch: 'full'
+                        },
+                        {
+                            path: 'list',
+                            component: ArticleListComponent,
+                            canActivate: [userRoleGuard],
+                        },
+                    ]
             },
             {
                 path: 'companies',

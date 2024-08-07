@@ -1,9 +1,15 @@
+import mongoose from 'mongoose';
 import Article from '../entities/articleEntity';
 import { IArticle } from '../models/article';
 
 class ArticleService {
-    async getAllArticles(): Promise<IArticle[]> {
-        return Article.find();
+    async getAllArticles(user: any): Promise<IArticle[]> {
+        const matchConditions: any = {
+            company: { $eq: user.company }
+        };
+        return Article.aggregate([
+            { $match: user.userType != 'admin' ? matchConditions : {} }
+        ]);
     }
 
     async getArticleById(articleId: string): Promise<IArticle | null> {

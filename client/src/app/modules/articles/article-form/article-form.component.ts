@@ -4,6 +4,8 @@ import { CommonFormComponent } from '../../../shared/components/common-form/comm
 import { ArticleService } from '../../../services/article.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef } from 'ng-zorro-antd/modal';
+import { CompanyService } from '../../../services/company.service';
+import { AuthService } from '../../../core/auth.service';
 
 @Component({
   selector: 'app-article-form',
@@ -14,20 +16,44 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
 })
 export class ArticleFormComponent {
   modalData: any;
+  loginUser = this.authService.getUser();
   @ViewChild(CommonFormComponent) formComponent!: CommonFormComponent;
 
   constructor(private articleService: ArticleService,
     private message: NzMessageService,
+    private authService: AuthService,
+    private companyService: CompanyService,
     private modalRef: NzModalRef<ArticleFormComponent>) { }
+
+  filterOptions: any = {
+    companyList: []
+  };
 
   articleForm = {
     config: [
       { name: 'article', label: 'Article', type: 'input', validators: [Validators.required] },
       { name: 'price', label: 'Price', type: 'input', inputType: 'number', validators: [Validators.required] },
+      { name: 'company', label: 'Comapany', type: 'autocomplete', filter: 'companyList', validators: [Validators.required] },
     ],
     submitButton: 'Submit',
     resetButton: 'Clear',
     hideButton: false
+  }
+
+  ngOnInit() {
+    if (this.loginUser.userType !== 'admin') {
+      this.articleForm.config = this.articleForm.config.filter(c => c.name !== 'company');
+    }
+  }
+
+  // company list 
+  getCompanyList() {
+    this.filterOptions.companyList = [];
+    this.companyService.getCompanys().subscribe(result => {
+      if (result.success) {
+        result.data.forEach((c: any) => this.filterOptions.companyList.push({ label: c.name, value: c._id }))
+      }
+    })
   }
 
   // get user by id 

@@ -34,7 +34,6 @@ export class ArticleListComponent {
       compare: (a: any, b: any) => a.article.localeCompare(b.article),
       priority: false
     },
-   
     {
       title: 'Price',
       key: 'price',

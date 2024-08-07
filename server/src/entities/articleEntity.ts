@@ -5,7 +5,7 @@ const articleSchema: Schema = new Schema({
     article: { type: String, required: true },
     price: { type: Number, required: true },
     description: { type: String, required: false },
-    company: { type: String, required: false },
+    company: { type: String, required: true },
     userId: { type: String, required: false },
 });
 
