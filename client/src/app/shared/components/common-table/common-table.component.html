@@ -9,15 +9,18 @@
     <tbody>
         <tr *ngFor="let data of sortTable.data">
             <td *ngFor="let column of listColumns">
-                <div *ngIf="column.key === 'actions'; else setValue">
+                <div *ngIf="column.key === 'actions'; else tagValue">
                     <div nz-flex [nzGap]="5">
-                        <button *ngFor="let btn of column.buttons" nz-button nzType="default" nzShape="circle"
-                            nzSize="small" (click)="actionControl(data,btn.action)"><span nz-icon
-                                [nzType]="btn.icon"></span></button>
+                        <button *ngFor="let btn of column.buttons" nz-button nzType="default" nzSize="small"
+                            (click)="actionControl(data,btn.action)"><span nz-icon [nzType]="btn.icon"></span></button>
                     </div>
                 </div>
+                <ng-template #tagValue>
+                    <nz-tag *ngIf="column.dataType === 'tag'; else setValue"
+                        [nzColor]="data[column.key] | commonTable : column : properties">{{ data[column.key] }}</nz-tag>
+                </ng-template>
                 <ng-template #setValue>
-                    {{ data[column.key] }}
+                    {{ data[column.key] | commonTable : column : properties}}
                 </ng-template>
             </td>
         </tr>

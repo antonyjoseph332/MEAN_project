@@ -9,6 +9,9 @@ import { LoginComponent } from './modules/login/login.component';
 import { tokenGuardGuard } from './core/token-guard.guard';
 import { userRoleGuard } from './core/user-role.guard';
 import { ArticleListComponent } from './modules/articles/article-list/article-list.component';
+import { BillingComponent } from './modules/billing/billing.component';
+import { BillingListComponent } from './modules/billing/billing-list/billing-list.component';
+import { BillingFormComponent } from './modules/billing/billing-form/billing-form.component';
 
 export const routes: Routes = [
     {
@@ -25,6 +28,38 @@ export const routes: Routes = [
                 path: '',
                 redirectTo: 'user',
                 pathMatch: 'full'
+            },
+            {
+                path: 'billing',
+                component: BillingComponent,
+                canActivate: [userRoleGuard],
+                children: [
+                    {
+                        path: '',
+                        redirectTo: 'list',
+                        pathMatch: 'full'
+                    },
+                    {
+                        path: 'list',
+                        component: BillingListComponent,
+                        canActivate: [userRoleGuard],
+                    },
+                    {
+                        path: 'create',
+                        component: BillingFormComponent,
+                        canActivate: [userRoleGuard],
+                    },
+                    {
+                        path: 'edit/:id',
+                        component: BillingFormComponent,
+                        canActivate: [userRoleGuard],
+                    },
+                    {
+                        path: 'view/:id',
+                        component: BillingFormComponent,
+                        canActivate: [userRoleGuard],
+                    },
+                ]
             },
             {
                 path: 'user',

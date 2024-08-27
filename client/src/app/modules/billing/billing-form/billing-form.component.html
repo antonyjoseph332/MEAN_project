@@ -1,0 +1,75 @@
+<form [formGroup]="form">
+  <div class="mb-3" nz-flex nzJustify="space-between" nzAlign="center" nzGap="small">
+    <div nz-flex nzGap="small" nzAlign="center">
+      <label>Date :</label>
+      <nz-date-picker formControlName="orderDate"></nz-date-picker>
+    </div>
+    <div nz-flex nzGap="large">
+      <nz-statistic [nzValue]="form.get('totalItems')?.value" [nzTitle]="'Total Items'"></nz-statistic>
+      <nz-statistic [nzValue]="form.get('totalAmount')?.value" [nzTitle]="'Total Amount'"></nz-statistic>
+    </div>
+  </div>
+
+  <nz-table #editRowTable nzBordered [nzData]="items.controls" nzTableLayout="fixed" [nzShowPagination]="false">
+    <thead>
+      <tr>
+        <th nzWidth="8%">Sl.No</th>
+        <th>Item</th>
+        <th>Qty</th>
+        <th>Recived Qty</th>
+        <th>Rate (in Rs)</th>
+        <th>Discount</th>
+        <th>Total (in Rs)</th>
+        <th>Amount (in Rs)</th>
+        <th nzWidth="8%" *ngIf="items.length > 1">
+        </th>
+      </tr>
+    </thead>
+    <tbody formArrayName="items">
+      <tr *ngFor="let item of items.controls; let i = index" [formGroupName]="i">
+        <td>{{ i + 1 }}</td>
+        <td>
+          <nz-select formControlName="article" class="w-100" (ngModelChange)="onArticleSelect(i)">
+            <nz-option *ngFor="let art of articleList" [nzValue]="art?._id" [nzLabel]="art?.article"></nz-option>
+          </nz-select>
+        </td>
+
+        <td>
+          <input type="number" class="text-center" (keyup)="updateTotalPrice(i)" nz-input formControlName="noOfItem" />
+        </td>
+
+        <td>
+          <input type="number" class="text-center" (keyup)="updateTotalPrice(i)" nz-input
+            formControlName="deliveredItems" />
+        </td>
+
+        <td><b>{{ item.get('price')?.value }}</b></td>
+
+        <td>
+          <nz-input-group nzSuffix="%">
+            <input type="number" nz-input formControlName="discount" (keyup)="updateTotalPrice(i)" />
+          </nz-input-group>
+        </td>
+
+        <td><b>{{ item.get('totalPrice')?.value }}</b></td>
+
+        <td><b>{{ item.get('amountToPay')?.value }}</b></td>
+
+        <td *ngIf="items.length > 1">
+          <div nz-flex [nzGap]="5">
+            <button nz-button nzType="default" nzDanger nzSize="small" (click)="removeItem(i)">
+              <span nz-icon nzType="delete" nzTheme="outline"></span>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <div class="mt-3" nz-flex nzAlign="center" nzGap="small">
+    <button nz-button nzType="primary" (click)="addItem()">
+      <span nz-icon nzType="plus" nzTheme="outline"></span>
+      Add Item
+    </button>
+    <button nz-button nzType="primary" (click)="onSubmit()">Submit</button>
+  </div>
+</form>

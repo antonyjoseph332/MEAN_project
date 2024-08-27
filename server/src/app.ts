@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import userRouter from './controllers/userController';
 import articleRouter from './controllers/articleController';
 import companyRouter from './controllers/companyController';
+import billRouter from './controllers/billController';
 declare global {
     namespace Express {
         interface Request {
@@ -31,6 +32,7 @@ class App {
     private routes(): void {
         this.app.use('/api/users', userRouter);
         this.app.use('/api/article', articleRouter);
+        this.app.use('/api/bill', billRouter);
         this.app.use('/api/company', companyRouter);
     }
 

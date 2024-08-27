@@ -17,6 +17,10 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { NzStatisticModule } from 'ng-zorro-antd/statistic';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 
 @NgModule({
   declarations: [],
@@ -38,7 +42,11 @@ import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
     NzCardModule,
     NzAvatarModule,
     NzDropDownModule,
-    NzAutocompleteModule
+    NzAutocompleteModule,
+    NzSelectModule,
+    NzPageHeaderModule,
+    NzStatisticModule,
+    NzTagModule
   ],
   exports: [
     NzButtonModule,
@@ -58,7 +66,11 @@ import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
     NzCardModule,
     NzAvatarModule,
     NzDropDownModule,
-    NzAutocompleteModule
+    NzAutocompleteModule,
+    NzSelectModule,
+    NzPageHeaderModule,
+    NzStatisticModule,
+    NzTagModule
   ]
 })
 export class AntDesignModule { }
